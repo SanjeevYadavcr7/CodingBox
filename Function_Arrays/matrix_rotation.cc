@@ -10,7 +10,7 @@ void rotateMatrix(int** arr, int n){
 			arr[n-i-1][j] = temp;
 		}
 	}
-	
+		
 	for(int i=0;i<n;i++){
 		for(int j=i;j<m;j++){
 			int temp = arr[i][j];
