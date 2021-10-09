@@ -1,20 +1,23 @@
 #include <iostream>
 using namespace std;
 
-void printSS(string ques, string ans){
-    if(ques.length() == 0){
-    	return;
-    }
-    char ch = ques[0];
-    string str = ques.substr(1);
-    
-    cout<<ch+str<<endl;
-    printSS(str,ans);
-    return;
+void printSS(string str, string ans){		
+	if(str.length() == 0){
+		cout<<ans<<"\n";
+		return;
+	} 
+    char ch = str[0];
+    string new_str = str.substr(1);
+    ans += ch;
+    printSS(new_str, ans);
+    ans = ans.erase(ans.length()-1);
+    printSS(new_str, ans);
+	return;
 }
 
 int main(){
     string str;
     cin >> str;
     printSS(str, "");
+	return 0;
 }
