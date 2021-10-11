@@ -1,5 +1,18 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<math.h>
 using namespace std;
+
+int solve(int n){
+	
+	if(n == 1) return 1;
+	int gap = 1;
+	while(gap*2 <= n) gap *= 2;
+	
+	if(gap == n) return gap/2;
+	int diff = n-gap+1;
+	int ans = max(diff, gap/2);
+	return ans;
+}
 
 int main(){
 	int t;
@@ -7,18 +20,8 @@ int main(){
 	while(t--){
 		int n;
 		cin>>n;
-		int prod;
-		for(int i=0;;i++){
-			prod = pow(2,i);
-			if(prod >= n){
-				prod = pow(2,i-1);
-				break;
-			} 
-		}
-		if(n == 1 || n == 2) cout<<1;
-		else if(n%2 == 0) cout<<n-prod;
-		else cout<<n-prod+1;
-		cout<<"\n";
+		int ans = solve(n);
+		cout<<ans<<"\n";
 	}
 
 	return 0;
