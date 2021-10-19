@@ -41,11 +41,6 @@ int getLargestArea(int arr[], int n){
 	vector<int> lsi = getLeftSmallestIndex(arr,n);
 	vector<int> rsi = getRightSmallestIndex(arr,n);
 	
-	cout<<"\nLeft[] = ";
-	for(int i: lsi) cout<<i<<" ";
-	cout<<"\nRight[] = ";
-	for(int i: rsi) cout<<i<<" ";
-	cout<<endl;
 	
 	int maxArea = 0;
 	for(int i=0;i<n;i++){
