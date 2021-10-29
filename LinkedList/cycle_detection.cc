@@ -30,6 +30,24 @@ class LinkedList{
 		}
 };
 
+int findMergeNode(SingleNode* head1, SingleNode* head2) {	
+	int ans = 1;
+	SingleNode* temp = head1;
+	while(temp != NULL){
+		temp->data = -1*(temp->data+1);
+		temp = temp->next;
+	}
+	temp = head2;
+	while(temp != NULL){
+		if(temp->data < 0){
+			ans = -1*temp->data-1;
+			break;
+		}
+		temp = temp->next;
+	}
+	return ans;
+}
+
 bool has_cycle(SingleNode* head){
 	if(head == NULL) return false;
 	SingleNode* slow = head;
