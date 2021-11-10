@@ -5,7 +5,7 @@ struct node{
 	int data;
 	struct node* next;
 };
-
+struct node* head = NULL;
 struct node* newNode(int node_data);
 struct node* insert_node(struct node* head, int node_data);
 void display(struct node* ptr);
@@ -33,23 +33,51 @@ bool isPalindrome(struct node* ptr, struct node* &head){
 			return true;
 		}
 		else return false;
-	}
-	
+	}	
 	return false;
 }	
+
+int getListLength(struct node* ptr,int len){
+	if(ptr == NULL) return len;
+	return getListLength(ptr->next,len+1);
+}
+
+struct node* left_node;
+
+void foldListHelper(struct node* right, int floor, int size){
+	if(right == NULL) return;
+	foldListHelper(right->next, floor+1,size);
+	if(floor > size/2){
+		struct node* temp = left_node->next;
+		left_node->next = right;
+		right->next = temp;
+		left_node = temp;	
+	} else if(floor == size/2){
+		left_node->next = right;
+		right->next = NULL; 
+	}
+}
+
+struct node* foldList(struct node* head, int size){
+	if(!head) return NULL;
+	left_node = head;
+	foldListHelper(head,0,size);
+	return head;
+}
 
 
 
 int main(){
 	int n,x;
 	cin>>n;
-	struct node* head = NULL;
+
 	for(int i=0;i<n;i++){
 		cin>>x;
 		head = insert_node(head,x);
 	}
-	if(isPalindrome(head, head)) cout<<"true\n";
-	else cout<<"false\n";
+
+	head = foldList(head,n);
+	display(head);
 	return 0;
 }
 
