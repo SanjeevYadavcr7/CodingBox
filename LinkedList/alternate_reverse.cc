@@ -15,30 +15,25 @@ int getListLength(struct Node* node);
 struct Node* insertNode(struct Node* head, int node_data);
 struct Node* reverseList(struct Node* head);
 
-struct Node* rearrange(struct Node* head, int len){	
-	struct Node* ptr = head;	
-	struct Node* temp;
-	int cnt = len/2;
+struct Node* rearrange(struct Node* odd){	
+	struct Node* ptr = odd;
+	if(!odd || !odd->next || !odd->next->next) return odd;
 	
-	struct Node* tail = head;
-	while(tail->next) tail = tail->next; 
+	Node* even = odd->next;
+	odd->next = odd->next->next;
+	odd = odd->next;
+	even->next = NULL;
 	
-	while(cnt>0){
-		int node_data = head->next->data;
-		struct Node* new_node = new Node(node_data);
-		head->next = head->next->next;
-		tail->next = new_node;
-		tail = new_node;
-		head = head->next;	
-		cnt--;
+	while(odd->next){
+		Node* next_odd = odd->next->next;
+		
+		odd->next->next = even;	
+		even = odd->next;
+		
+		odd->next = next_odd;
+		if(next_odd) odd = next_odd;
 	}
-	temp = ptr;
-	cnt = len-len/2;
-	while(cnt>1){
-		temp = temp->next;
-		cnt--;
-	} 
-	temp->next = reverseList(temp->next);
+	odd->next = even;
 	return ptr;
 }
 
@@ -50,7 +45,7 @@ int main(){
 		cin>>x;
 		head = insertNode(head, x);
 	}
-	head = rearrange(head,n);
+	head = rearrange(head);
 	display(head);
 	return 0;
 }
@@ -120,8 +115,34 @@ struct Node* reverseList(struct Node* ptr){
 	return qtr;
 }
 
-
-
+/*
+struct Node* rearrange(struct Node* head, int len){	
+	struct Node* ptr = head;	
+	struct Node* temp;
+	int cnt = len/2;
+	
+	struct Node* tail = head;
+	while(tail->next) tail = tail->next; 
+	
+	while(cnt>0){
+		int node_data = head->next->data;
+		struct Node* new_node = new Node(node_data);
+		head->next = head->next->next;
+		tail->next = new_node;
+		tail = new_node;
+		head = head->next;	
+		cnt--;
+	}
+	temp = ptr;
+	cnt = len-len/2;
+	while(cnt>1){
+		temp = temp->next;
+		cnt--;
+	} 
+	temp->next = reverseList(temp->next);
+	return ptr;
+}
+*/
 
 
 
