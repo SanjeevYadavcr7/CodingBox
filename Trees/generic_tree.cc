@@ -32,6 +32,16 @@ int cntNodes(Node* node){
 	return cnt;
 }
 
+int maxNode(Node* node){
+	int max_val = 0;
+	int child_max = 0;
+	for(Node* child: node->children){
+		child_max = max(child_max, maxNode(child));
+	}
+	max_val = max(max_val, child);
+	return 
+}
+
 int main(){
 
 	vector<int> arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
