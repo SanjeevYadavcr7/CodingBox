@@ -49,10 +49,10 @@ int main(){
 	struct Node *root1, *root2;
 	root1 = insert(root1, arr1);
 	root2 = insert(root2, arr2);	
-	//preOrder(root1);
-	//cout<<endl;
-	//preOrder(root2);
-	//cout<<endl;
+	preOrder(root1);
+	cout<<endl;
+	preOrder(root2);
+	cout<<endl;
 	if(areSimilar(root1, root2)) cout<<"true\n";
 	else cout<<"false\n";
 	
