@@ -12,29 +12,23 @@ struct Node{
 int size, height, max_node, min_node;
 
 Node* construct(Node* root, vector<int> arr);
-//void preOrder(Node* node);
 void multisolver(Node* root, int depth);
 
-int loc = -1, temp_loc = 0;
-void preOrder(Node* node, vector<int> &path, int node_data){
-	if(node->data == node_data){
-		loc = temp_loc;
-	}
-	temp_loc++;
-	path.push_back(node->data);
-	for(Node* child: node->children) preOrder(child, path, node_data);
-}
 
 Node* pre;
 Node* suc;
+int state = 0;
 
 void getPreSucc(Node* node, int node_data){
-	0
-	+++70vector<int> path;
-	preOrder(node, path, node_data);
-	int p = path[loc-1], s = path[loc+1];
-	pre = new Node(p);
-	suc = new Node(s);
+	if(state == 0){
+		if(node->data == node_data) state = 1;
+		else pre = node;
+	}
+	else if(state == 1){
+		suc = node;
+		state = 2;
+	}
+	for(Node* child: node->children) getPreSucc(child, node_data);
 }
 
 
