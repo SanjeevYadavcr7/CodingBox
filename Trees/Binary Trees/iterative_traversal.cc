@@ -14,8 +14,38 @@ Node* contructBinaryTree(Node* root, vector<int>arr);
 void display(Node* node);
 
 void iterativePrePostInTraversal(Node* node) {
-  
+	vector<int> pre, in, post;
+	stack<pair<Node*,int>> stk;
+	stk.push({node,0});
+	
+	while(!stk.empty()){
+		auto it = stk.top();
+		int state = it.second;
+		if(state == 0){
+			pre.push_back(it.first->data);
+			stk.top().second++;
+			if(stk.top().first->left) stk.push({stk.top().first->left,0});
+		}
+		else if(state == 1){
+			in.push_back(it.first->data);
+			stk.top().second++;
+			if(stk.top().first->right) stk.push({stk.top().first->right,0});		
+		}
+		else if(state == 2){
+			post.push_back(it.first->data);
+			stk.top().second++;
+		}
+		else stk.pop();
+	}
+	
+	for(int i : pre) cout<<i<<" ";
+	cout<<endl;
+	for(int i : in) cout<<i<<" ";
+	cout<<endl;
+	for(int i : post) cout<<i<<" ";
+	cout<<endl;
 }
+
 
 
 int main(){
