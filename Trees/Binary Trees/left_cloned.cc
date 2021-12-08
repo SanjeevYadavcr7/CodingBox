@@ -10,7 +10,8 @@ struct Node{
 		left = right = NULL;
 	}
 };
-Node* contructBinaryTree(Node* root, vector<int>arr);
+
+Node* contructBinaryTree(Node* root,vector<int> arr);
 void display(Node* node);
 
 bool isLeaf(Node* node){
@@ -19,33 +20,45 @@ bool isLeaf(Node* node){
 }
 
 Node* createLeftCloneTree(Node* node) {
-	if(!node) return NULL;
-	if(isLeaf(node)) return node;
-	
-	Node* l_node = createLeftCloneTree(node->left);		
-	Node* temp = node->left;
-	node->left = l_node;
-	l_node->left = temp; 
-	
-	Node* r_node = createLeftCloneTree(node->right);
+	if(!node) return NULL;	
+  	if(isLeaf(node)){
+  		node->left = new Node(node->data);
+  		return node;
+  	}
+  	
+  	if(node->left){
+  		Node* left_node = createLeftCloneTree(node->left);
+  		node->left = new Node(node->data);
+  		node->left->left = left_node;
+  	}
+  	else{
+  	  		Node* left_node = createLeftCloneTree(node->left);
+  			node->left = new Node(node->data);
+  	}
+  	
+  	if(node->right){
+  		Node* right_left_node = createLeftCloneTree(node->right);
+ 		node->right = right_left_node;
+  	}
+  	return node;
 }
 
-
 int main(){
-	int n;
-	cin>>n;
-	vector<int> arr;
-	for(int i=0;i<n;i++){
-		string temp;
-		cin>>temp;
-		if(temp == "n") arr.push_back(-1);
-		else arr.push_back(stoi(temp));
-	}
-	
-	Node* root = contructBinaryTree(root,arr);
-	root = createLeftCloneTree(root);
-  	display(root);	
-	
+	  vector<int> arr;
+	  int n;
+	  cin>>n;
+	  for (int i = 0; i < n; i++) {
+	    string inp;
+	    cin >> inp;
+	    if (inp != "n") arr.push_back(stoi(inp));
+	    else arr.push_back(-1);
+	  }
+		
+	  Node* root = contructBinaryTree(root,arr);
+	  display(root);
+	  root = createLeftCloneTree(root);
+ 	  cout<<"\n\nTree....\n\n";
+ 	  display(root);
 	return 0;
 }
 
@@ -58,6 +71,23 @@ int main(){
 
 
 
+
+
+
+
+
+void display(Node* node){
+	if(!node) return;
+	
+	string str = "";
+	str += (!node->left) ? "." : to_string(node->left->data);
+	str += " <- " + to_string(node->data) + " ->";
+	str += (!node->right) ? "." : to_string(node->right->data); 
+	cout<<str<<endl;
+	
+	display(node->left);
+	display(node->right);
+}
 
 
 
@@ -96,23 +126,35 @@ Node* contructBinaryTree(Node* root, vector<int>arr){
 	return root;
 }
 
-void traversal(Node* node){
-	if(!node) return;
 
-	cout<<node->data<<" ";
-	traversal(node->left);
-	traversal(node->right);
-}
 
-void display(Node* node){
-	if(!node) return;
-	
-	string str = "";
-	str += (!node->left) ? "." : to_string(node->left->data);
-	str += " <- " + to_string(node->data) + " -> ";
-	str += (!node->right) ? "." : to_string(node->right->data);
-	cout<<str<<endl;
-	
-	display(node->left);
-	display(node->right);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
