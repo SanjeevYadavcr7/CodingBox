@@ -13,52 +13,23 @@ struct Node{
 Node* contructBinaryTree(Node* root, vector<int>arr);
 void display(Node* node);
 
-
-vector<Node*> getPathToRoot(Node* node, int data){
-	if(!node){
-		vector<Node*> path;
-		return path;
-	}
-	
-	if(node->data == data){
-		vector<Node*> path = {node};
-		return path;
-	}
-	
-	vector<Node*> path;
-	vector<Node*> l_node = getPathToRoot(node->left,data);
-	if(l_node.size() > 0){
-		l_node.push_back(node);
-		path = l_node;
-	}
-	
-	vector<Node*> r_node = getPathToRoot(node->right,data);	
-	if(r_node.size() > 0){
-		r_node.push_back(node);
-		path = r_node;
-	}
-	return path;
+bool isLeaf(Node* node){
+	if(node && !node->left && !node->right) return true;
+	return false;
 }
 
-void printKLevel(Node* node, int k, Node* prev_temp){
-	if(!node || k<0) return;
-	if(node->data == prev_temp->data) return;
-	if(k == 0) cout<<node->data<<"\n";	
-	printKLevel(node->left,k-1,prev_temp);
-	printKLevel(node->right,k-1,prev_temp);
+Node* createLeftCloneTree(Node* node) {
+	if(!node) return NULL;
+	if(isLeaf(node)) return node;
+	
+	Node* l_node = createLeftCloneTree(node->left);		
+	Node* temp = node->left;
+	node->left = l_node;
+	l_node->left = temp; 
+	
+	Node* r_node = createLeftCloneTree(node->right);
 }
 
-void printKNodesFar(Node* node, int data, int k){
-	vector<Node*> pathToRoot = getPathToRoot(node,data);
-	for(int i=1;i<pathToRoot.size();i++){
-		Node* temp = pathToRoot[i];
-		Node* prev_temp = pathToRoot[i-1];
-		if(k<i) break;
-		printKLevel(temp,k-i,prev_temp);
-	}
-}
-
-//vector<int> arr = {50 25 12 1 6 n n 7 n n 2 8 n n 9 n n 37 3 n 10 n n 4 n 11 	 };
 
 int main(){
 	int n;
@@ -72,12 +43,8 @@ int main(){
 	}
 	
 	Node* root = contructBinaryTree(root,arr);
-	
-	int data;
-  	cin >> data;
-	int k;
-	cin>>k; 
-	printKNodesFar(root,data,k);
+	root = createLeftCloneTree(root);
+  	display(root);	
 	
 	return 0;
 }
