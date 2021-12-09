@@ -66,6 +66,36 @@ int diameter(Node* node){
 	return temp;	
 }
 
+int diameter1(Node* node){
+	if(!node) return 0;
+	int ld = diameter1(node->left);
+	int rd = diameter1(node->right);
+	int h = height(node->left) + height(node->right) + 2;
+	int dia = max(h, max(ld,rd));
+	return dia;
+}
+
+pair<int,int> diameterHelper(Node* node){
+	if(!node){
+		pair<int,int> p = {-1,0};
+		return p;
+	}
+	
+	pair<int,int> lp = diameterHelper(node->left);
+	pair<int,int> rp = diameterHelper(node->right);
+	
+	int h = lp.first + rp.first + 2;
+	int dia = max(h, max(lp.second, rp.second));
+	int hei = max(lp.first,rp.first)+1;
+	pair<int,int> p = {hei,dia};
+	return p;
+}
+
+int getDiameter(Node* node){
+	pair<int, int> dia = diameterHelper(node);
+	int d = dia.second;
+	return d;
+}
 
 int main(){
 	  vector<int> arr;
@@ -85,6 +115,16 @@ int main(){
   
 	  return 0;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
