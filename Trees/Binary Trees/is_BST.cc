@@ -14,28 +14,35 @@ struct Node{
 Node* contructBinaryTree(Node* root,vector<int> arr);
 void display(Node* node);
 
-bool isLeaf(Node* node){
-	if(node && !node->left && !node->right) return true;
-	return false;
-}
+struct bst{
+	bool isbst;
+	int max_c;
+	int min_c;
+	bst(){
+		isbst = true;
+		max_c = 0;
+		min_c = 0;
+	}
+};
 
-int isBSTHelper(Node* node){
-	if(!node) return 0;
-	if(isLeaf(node)) return node->data;
+bst* Bst(Node* node){
+	if(!node){
+		bst* new_node = new bst(); 
+		new_node->isbst = true;
+		new_node->max_c = INT_MIN;
+		new_node->min_c = INT_MAX;
+		return new_node;
+	}
 	
-	int lv = isBSTHelper(node->left);
-	int rv = isBSTHelper(node->right);
-	if(lv == -1 || rv == -1) return -1;
-	else if(lv < node->data && rv > node->data) return node->data;
-	return -1; 
+	bst* l = Bst(node->left);
+	bst* r = Bst(node->right);	
+	
+	bst* ans = new bst();
+	ans->isbst = l->isbst && r->isbst && (node->data >= l->max_c && node->data <= r->min_c);
+	ans->max_c = max(node->data, max(l->max_c,r->max_c));
+	ans->min_c = min(node->data, min(l->min_c,r->min_c));
+	return ans;
 }
-
-bool isBST(Node* node){
-	int val = isBSTHelper(node);
-	if(val == -1) return false;
-	return true;
-}
-
 
 int main(){
 	  vector<int> arr;
@@ -49,9 +56,11 @@ int main(){
 	  }
 		
 	  Node* root = contructBinaryTree(root,arr);
-	  if(isBST(root)) cout<<"true\n";
-	  else cout<<"false\n";
-	 
+	  bst* r = Bst(root);
+	  if(r->isbst) cout<<"true";
+	  else cout<<"false";
+	  cout<<endl;
+	  	 
 	  return 0;
 }
 
