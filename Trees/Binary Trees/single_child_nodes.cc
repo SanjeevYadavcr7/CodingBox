@@ -14,46 +14,16 @@ struct Node{
 Node* contructBinaryTree(Node* root,vector<int> arr);
 void display(Node* node);
 
-bool isLeaf(Node* node){
-	if(node && !node->left && !node->right) return true;
-	return false;
-}
-
-Node* createLeftCloneTree(Node* node) {
-	if(!node) return NULL;	
-  	if(isLeaf(node)){
-  		node->left = new Node(node->data);
-  		return node;
-  	}
-  	
-  	if(node->left){
-  		Node* left_node = createLeftCloneTree(node->left);
-  		node->left = new Node(node->data);
-  		node->left->left = left_node;
-  	}
-  	else{
-  	  		Node* left_node = createLeftCloneTree(node->left);
-  			node->left = new Node(node->data);
-  	}
-  	
-  	if(node->right){
-  		Node* right_left_node = createLeftCloneTree(node->right);
- 		node->right = right_left_node;
-  	}
-  	return node;
-}
-
-Node* createLeftCloneTree(Node* node){
-	if(!node) return NULL;
+void printSingleChildNodes(Node* node, Node* parent) {
+ 	if(!node) return;
 	
-	Node* nlc = createLeftCloneTree(node->left);
-	Node* nrc = createLeftCloneTree(node->right);
+	if(parent){
+		if(!parent->left && parent->right) cout<<node->data<<"\n";
+		else if(parent->left && !parent->right) cout<<node->data<<"\n"; 
+	}
 	
-	Node* new_node = new Node(node->data);
-	new_node->left = nlc;
-	node->left = new_node;
-	node->right = nrc;
-	return node;
+	printSingleChildNodes(node->left, node);
+	printSingleChildNodes(node->right, node);
 }
 
 int main(){
@@ -68,11 +38,9 @@ int main(){
 	  }
 		
 	  Node* root = contructBinaryTree(root,arr);
-	  display(root);
-	  root = createLeftCloneTree(root);
- 	  cout<<"\n\nTree....\n\n";
- 	  display(root);
-	return 0;
+	  printSingleChildNodes(root, nullptr);
+	  
+	  return 0;
 }
 
 

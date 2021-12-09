@@ -19,41 +19,11 @@ bool isLeaf(Node* node){
 	return false;
 }
 
-Node* createLeftCloneTree(Node* node) {
-	if(!node) return NULL;	
-  	if(isLeaf(node)){
-  		node->left = new Node(node->data);
-  		return node;
-  	}
-  	
-  	if(node->left){
-  		Node* left_node = createLeftCloneTree(node->left);
-  		node->left = new Node(node->data);
-  		node->left->left = left_node;
-  	}
-  	else{
-  	  		Node* left_node = createLeftCloneTree(node->left);
-  			node->left = new Node(node->data);
-  	}
-  	
-  	if(node->right){
-  		Node* right_left_node = createLeftCloneTree(node->right);
- 		node->right = right_left_node;
-  	}
-  	return node;
-}
-
-Node* createLeftCloneTree(Node* node){
+Node* transBackFromLeftClonedTree(Node* node) {
 	if(!node) return NULL;
 	
-	Node* nlc = createLeftCloneTree(node->left);
-	Node* nrc = createLeftCloneTree(node->right);
-	
-	Node* new_node = new Node(node->data);
-	new_node->left = nlc;
-	node->left = new_node;
-	node->right = nrc;
-	return node;
+	Node* lc = transBackFromLeftClonedTree(node->left);
+	node->left = lc;
 }
 
 int main(){
@@ -69,7 +39,7 @@ int main(){
 		
 	  Node* root = contructBinaryTree(root,arr);
 	  display(root);
-	  root = createLeftCloneTree(root);
+	  root = transBackFromLeftClonedTree(root);
  	  cout<<"\n\nTree....\n\n";
  	  display(root);
 	return 0;
