@@ -25,32 +25,24 @@ struct bst{
 	}
 };
 
-int height(Node* node){
-	return (!node) ? -1 : ( max( height(node->left), height(node->right) ) + 1 );
-}
-
-pair<int,int> isBalanceHelper(Node* node){
+bst* Bst(Node* node){
 	if(!node){
-		pair<int,int> ln = {0,1};
-		return ln;
+		bst* new_node = new bst(); 
+		new_node->isbst = true;
+		new_node->max_c = INT_MIN;
+		new_node->min_c = INT_MAX;
+		return new_node;
 	}
 	
-	pair<int,int> lp = isBalanceHelper(node->left);
-	pair<int,int> rp = isBalanceHelper(node->right);
+	bst* l = Bst(node->left);
+	bst* r = Bst(node->right);	
 	
-	pair<int,int> ans;
-	ans.first = max(lp.first,rp.first)+1;
-	int h = abs(lp.first-rp.first);
-	ans.second = (lp.second && rp.second && h<=1) ? 1 : 0;
+	bst* ans = new bst();
+	ans->isbst = l->isbst && r->isbst && (node->data >= l->max_c && node->data <= r->min_c);
+	ans->max_c = max(node->data, max(l->max_c,r->max_c));
+	ans->min_c = min(node->data, min(l->min_c,r->min_c));
 	return ans;
 }
-
-
-int isbalance(Node* node){
-	pair<int,int> p = isBalanceHelper(node);
-	return p.second;
-}
-
 
 int main(){
 	  vector<int> arr;
@@ -64,9 +56,9 @@ int main(){
 	  }
 		
 	  Node* root = contructBinaryTree(root,arr);
-	  int r = isbalance(root);
-      if (r == 1) cout << "true";
-	  else cout << "false";
+	  bst* r = Bst(root);
+	  if(r->isbst) cout<<"true";
+	  else cout<<"false";
 	  cout<<endl;
 	  	 
 	  return 0;
