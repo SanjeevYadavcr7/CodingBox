@@ -13,29 +13,29 @@ struct Node{
 void display(Node* node);
 Node* remove(Node* node, int data);
 Node* constructTree(vector<int> arr);
+void travelAndPrint(Node* root, Node* node, int tar);
+bool search(Node* node, Node* blocker, int data);
 
-bool search(Node* node, Node* blocker, int data){
-	if(!node) return false; 
-	
-	if(node->data == data && node != blocker){
-		node->data = INT_MIN;
-		return true;
-	} 
-	else if(node->data > data) return search(node->left,blocker,data);
-	else if(node->data > data) return search(node->right,blocker,data);
-	else return (search(node->left,blocker,data) || search(node->right,blocker,data));		
+void getNodesInArray(Node* node, vector<int> & arr){
+	if(!node) return;
+	getNodesInArray(node->left,arr);
+	arr.push_back(node->data);
+	getNodesInArray(node->right,arr);
 }
 
-
-void travelAndPrint(Node* root, Node* node, int tar) {
-	if(!node) return;
-	int co_pair = tar - node->data;
-	if(search(root,node,co_pair)){
-		cout<<node->data<<" "<<co_pair<<endl;
-		node->data = INT_MIN;
-	} 
-	travelAndPrint(root, node->left, tar);
-	travelAndPrint(root, node->right, tar);
+void targetSum(Node* root, int tar){
+	vector<int> node_arr;
+	getNodesInArray(root,node_arr);
+	int beg = 0, end = node_arr.size()-1;
+	while(beg<end){
+		if(node_arr[beg] + node_arr[end] == tar){
+			cout<<node_arr[beg]<<" "<<node_arr[end]<<endl;
+			beg++;
+			end--;
+		} 
+		else if(node_arr[beg] + node_arr[end] < tar) beg++;
+		else end--;
+	}
 }
 
 int main(){
@@ -52,7 +52,7 @@ int main(){
   	int target;
   	cin >> target;
   	Node* root = constructTree(arr);
-	travelAndPrint(root,root,target);
+	targetSum(root,target);
 	
 	return 0;
 }
@@ -151,4 +151,26 @@ Node* remove(Node* node, int data) {
 	return node;
 }
 
+bool search(Node* node, Node* blocker, int data){
+	if(!node) return false; 
+	
+	if(node->data == data && node != blocker){
+		node->data = INT_MIN;
+		return true;
+	} 
+	else if(node->data > data) return search(node->left,blocker,data);
+	else if(node->data > data) return search(node->right,blocker,data);
+	else return (search(node->left,blocker,data) || search(node->right,blocker,data));		
+}
 
+
+void travelAndPrint(Node* root, Node* node, int tar) {
+	if(!node) return;
+	int co_pair = tar - node->data;
+	if(search(root,node,co_pair)){
+		cout<<node->data<<" "<<co_pair<<endl;
+		node->data = INT_MIN;
+	} 
+	travelAndPrint(root, node->left, tar);
+	travelAndPrint(root, node->right, tar);
+}
