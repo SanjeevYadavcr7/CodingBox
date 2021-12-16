@@ -10,33 +10,51 @@ struct Node{
 		left = right = NULL;
 	}
 };
+
+
 void display(Node* node);
 Node* remove(Node* node, int data);
 Node* constructTree(vector<int> arr);
 void travelAndPrint(Node* root, Node* node, int tar);
 bool search(Node* node, Node* blocker, int data);
+void getNodesInArray(Node* node, vector<int> & arr);
+void targetSum(Node* root, int tar);
 
-void getNodesInArray(Node* node, vector<int> & arr){
-	if(!node) return;
-	getNodesInArray(node->left,arr);
-	arr.push_back(node->data);
-	getNodesInArray(node->right,arr);
-}
-
-void targetSum(Node* root, int tar){
-	vector<int> node_arr;
-	getNodesInArray(root,node_arr);
-	int beg = 0, end = node_arr.size()-1;
-	while(beg<end){
-		if(node_arr[beg] + node_arr[end] == tar){
-			cout<<node_arr[beg]<<" "<<node_arr[end]<<endl;
-			beg++;
-			end--;
+void targetSum2(Node* node, int tar){
+	
+	stack<pair<Node*,int>> inc,dec;
+	pair<Node*,int> p = {node,0};
+	inc.push(p);
+	dec.push(p);
+	
+	while(!inc.empty()){
+		auto it = inc.top();
+		int state = inc.top().second;
+		Node* in_temp = it.first;
+		Node* de_temp = dec.top().first;
+		
+		if(state == 0){
+			inc.top().second++;
+			dec.top().second++;
+			if(in_temp->left) inc.push({in_temp->left,0});	
+			if(de_temp->right) dec.push({de_temp->right,0});	
+		}
+		else if(state == 1){
+			if(inc.top().first->data + dec.top().first->data == tar) 
+				cout<<inc.top().first->data<<" "<<dec.top().first->data<<"\n";
+			
+			inc.top().second++;
+			dec.top().second++;
+			if(in_temp->right) inc.push({in_temp->right,0});
+			if(de_temp->left) dec.push({de_temp->left,0});	
+		}
+		else{
+			inc.pop();
+			dec.pop();
 		} 
-		else if(node_arr[beg] + node_arr[end] < tar) beg++;
-		else end--;
 	}
 }
+
 
 int main(){
 	int n;
@@ -52,7 +70,7 @@ int main(){
   	int target;
   	cin >> target;
   	Node* root = constructTree(arr);
-	targetSum(root,target);
+	targetSum2(root,target);
 	
 	return 0;
 }
@@ -173,4 +191,27 @@ void travelAndPrint(Node* root, Node* node, int tar) {
 	} 
 	travelAndPrint(root, node->left, tar);
 	travelAndPrint(root, node->right, tar);
+}
+
+void targetSum(Node* root, int tar){
+	vector<int> node_arr;
+	getNodesInArray(root,node_arr);
+	int beg = 0, end = node_arr.size()-1;
+	while(beg<end){
+		if(node_arr[beg] + node_arr[end] == tar){
+			cout<<node_arr[beg]<<" "<<node_arr[end]<<endl;
+			beg++;
+			end--;
+		} 
+		else if(node_arr[beg] + node_arr[end] < tar) beg++;
+		else end--;
+	}
+}
+
+
+void getNodesInArray(Node* node, vector<int> & arr){
+	if(!node) return;
+	getNodesInArray(node->left,arr);
+	arr.push_back(node->data);
+	getNodesInArray(node->right,arr);
 }
