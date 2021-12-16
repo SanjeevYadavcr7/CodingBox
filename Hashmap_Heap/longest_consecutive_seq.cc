@@ -8,7 +8,7 @@ void longestConsecutive(vector<int>& num) {
 	for(int i=14;i>=0;i--){
 			if(m[i] != 0){
 				m[i] = m[i+1] + 1;
-				if(max_freq < m[i]){
+				if(max_freq <= m[i]){
 					max_freq = m[i];
 					beg = i;
 				}
@@ -17,7 +17,6 @@ void longestConsecutive(vector<int>& num) {
 	
 	for(int i=beg;i<beg+max_freq;i++) cout<<i<<" ";
 	cout<<endl;
-	
 }
 
 int main()
