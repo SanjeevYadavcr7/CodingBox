@@ -18,34 +18,21 @@ class Edge{
 		}
 };
 
-bool hasPath(vector<Edge> graph[], int src, int dest, bool vis[]){
-	
-	if(src == dest) return true;
-	
+void printAllPaths(vector<Edge> graph[], int src, int dest, bool vis[], string path, vector<string>& ans){
+	if(src == dest){
+		path += to_string(src);
+		ans.push_back(path);
+		return;
+	}
 	vis[src] = true;
-	for(Edge edge : graph[src]){
-		int nei = edge.nbr;
+	path += to_string(src);
+	for(Edge e:graph[src]){
+		int nei = e.nbr;
 		if(!vis[nei]){
-			if(hasPath(graph,nei,dest,vis)) return true;	
+			printAllPaths(graph,nei,dest,vis,path,ans);		
 		}
 	}
-	return false;
-}
-
-bool printAllPaths(vector<Edge> graph[], int src, int dest, bool vis[]){
-	
-	if(src == dest){
-		cout<<dest<<endl;
-		return;
-	} 
-
-	vis[src] = true;
-	for(Edge edge : graph[src]){
-		int nei = edge.nbr; 
-		if(!vis[nei]){
-			if(printAllPaths(graph,nei,dest,vis))
-		} 
-	}
+	vis[src] = false;
 }
 
 int main(){
@@ -65,10 +52,10 @@ int main(){
 	cin>>src>>dest;
 	
 	bool vis[v] = {false};
-	printAllPaths(graph,src,dest,vis);
+	vector<string> path;
+	printAllPaths(graph,src,dest,vis,"",path);
 	
-	//if(hasPath(graph,src,dest,vis)) cout<<"true\n";
-	//else cout<<"false\n";
+	for(string p:path) cout<<p<<endl;
 	
 	return 0;
 }
