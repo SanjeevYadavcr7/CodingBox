@@ -18,10 +18,10 @@ class Edge{
 		}
 };
 
-void printAllPaths(vector<Edge> graph[], int src, int dest, bool vis[], string path, vector<string>& ans){
+void printAllPaths(vector<Edge> graph[], int src, int dest, bool vis[], string path){
 	if(src == dest){
 		path += to_string(src);
-		ans.push_back(path);
+		cout<<path<<"\n";
 		return;
 	}
 	vis[src] = true;
@@ -29,7 +29,7 @@ void printAllPaths(vector<Edge> graph[], int src, int dest, bool vis[], string p
 	for(Edge e:graph[src]){
 		int nei = e.nbr;
 		if(!vis[nei]){
-			printAllPaths(graph,nei,dest,vis,path,ans);		
+			printAllPaths(graph,nei,dest,vis,path);		
 		}
 	}
 	vis[src] = false;
@@ -52,10 +52,7 @@ int main(){
 	cin>>src>>dest;
 	
 	bool vis[v] = {false};
-	vector<string> path;
-	printAllPaths(graph,src,dest,vis,"",path);
-	
-	for(string p:path) cout<<p<<endl;
+	printAllPaths(graph,src,dest,vis,"");
 	
 	return 0;
 }
