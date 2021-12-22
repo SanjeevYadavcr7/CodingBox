@@ -14,11 +14,6 @@ long long int maximizeSum(long long int a[], int n, int k){
 	}   
 	
 	sort(a,a+n);
-	
-	cout<<"arr[] = ";
-	for(int i=0;i<n;i++) cout<<a[i]<<" ";
-	cout<<endl;
-	
 	for(int i=1;i<n;i++) ans += a[i];
 	if(k == 0 || k%2 == 0) return a[0]+ans;
 	return ans-a[0];		
