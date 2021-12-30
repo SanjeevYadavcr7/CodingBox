@@ -31,3 +31,13 @@ int main(){
 	
 	return 0;
 }
+
+
+
+
+
+// NOTE : we are only getting possible combinantions(*not permutation) in answer because we are taking each coin 
+// once(same order as in coins[])
+// so for eg. coins[] = {2,3,5}   target amount = 7
+// answer is all possible coins combinations of target amount = (2,2,3) (2,5)
+// not all possible permutaions = (2,2,3)  (2,3,2)  (3,2,2)  (2,5)  (5,2)
