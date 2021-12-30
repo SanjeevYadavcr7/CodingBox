@@ -7,6 +7,7 @@ int getPossibleCoinComb(int coins[], int n, int total_amt){
 	dp[0] = 1;
 	for(int i=0;i<n;i++){
 		int curr_coin = coins[i];
+		
 		for(int curr_amt = 1 ; curr_amt <= total_amt; curr_amt++){
 			if(curr_amt >= curr_coin){
 				int left_amt = curr_amt - curr_coin;

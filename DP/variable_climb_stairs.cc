@@ -23,9 +23,11 @@ int cs(int arr[], int n){
 	vector<int> mem(n+1,0);
 	int ways = climb_stairs(arr,0,n,mem);
 	return ways;
+	
 }
 
 int main(){
+
 	int n;
 	cin>>n;
 	int arr[n];
