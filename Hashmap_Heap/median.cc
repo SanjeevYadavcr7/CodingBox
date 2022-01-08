@@ -8,12 +8,16 @@ class MedianPriorityQueue{
 		
 		void add(int val){
 			int l_size = left.size(), r_size = right.size();
+			
 			if(size() == 0) left.push(val);
 			else if(l_size > 0 && left.top() >= val) left.push(val);
 			else right.push(val);
-				
+			
+			//cout<<"Left[] = "<<left.size()<<" | Right[] = "<<right.size()<<endl;	
+			l_size = left.size(), r_size = right.size();
+			
 			int len_diff = abs(l_size - r_size);
-			if(len_diff > 2){
+			if(len_diff > 1){
 				if(l_size > r_size){
 					right.push(left.top());
 					left.pop();
@@ -31,7 +35,7 @@ class MedianPriorityQueue{
 				return -1;
 			}
 			int median = peek();
-			if(left.size() > right.size()) left.pop();
+			if(left.size() >= right.size()) left.pop();
 			else right.pop();
 			return median;
 		}
@@ -41,7 +45,7 @@ class MedianPriorityQueue{
 				cout<<"Underflow\n";
 				return -1;
 			}
-			if(left.size() > right.size()) return left.top();
+			if(left.size() >= right.size()) return left.top();
 			return right.top();
 		}
 		
@@ -64,7 +68,10 @@ int main(){
 			int val = pq.pop();
 			if(val != -1) cout<<val<<endl;
 		}
-		else if(str == "peek") cout<<pq.peek()<<endl;
+		else if(str == "peek"){
+			int val = pq.peek();
+			if(val != -1) cout<<val<<endl;
+		} 
 		else if(str == "size") cout<<pq.size()<<endl;
 		cin>>str;
 	}
