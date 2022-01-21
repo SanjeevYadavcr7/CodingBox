@@ -2,13 +2,16 @@
 using namespace std;
 
 int doTiling(int n, int m){
-	vector<int> dp(n+1);
-	for(int i=1;i<=n;i++){
-		if(i < m) dp[i] = 1;
-		else if(i == m) dp[i] = 2;
-		else dp[i] = dp[i-1] + dp[i-m];
-	}
-	return dp[n];
+    if(n >= m) return 1;
+    if(n == m) return 2;    
+    m = m-n;
+    int prev_tiles_ways = 1, curr_tiles_ways = 2;
+    while(m--){
+        int temp = curr_tiles_ways;
+        curr_tiles_ways += prev_tiles_ways;
+        prev_tiles_ways = temp;
+    }
+    return curr_tiles_ways;
 }
 
 int main(){
