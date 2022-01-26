@@ -24,7 +24,6 @@ bool validMountainArray(vector<int>& arr){
 	int i = 1;
 	while(i<n && arr[i-1] < arr[i]) i++;
 	if(i == 1) return false;
-	cout<<i<<"\n";
 	
 	while(i<n && arr[i-1] > arr[i]) i++;
 	
