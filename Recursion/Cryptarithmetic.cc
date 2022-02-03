@@ -31,6 +31,7 @@ void solution(string unique, int idx, unordered_map<char,int>& mp, vector<bool>&
 	}
 }
 
+
 int main(){
 	string x,y,z;
 	getline(cin,x);
@@ -42,17 +43,6 @@ int main(){
 	vector<bool> usedNum(10,false);
 	
 	solution(unique,0,mp,usedNum,x,y,z);
-	/*
-	map<char,int> new_mp;
-	new_mp['a'] = 3;
-	new_mp['e'] = 9;
-	new_mp['m'] = 4;
-	new_mp['o'] = 1;
-	new_mp['p'] = 2;
-	new_mp['r'] = 6;
-	new_mp['t'] = 0;
-	if(checkWordsSum(new_mp,x,y,z)) display(new_mp);
-	*/
 	
 	return 0;
 }
