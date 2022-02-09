@@ -2,6 +2,69 @@
 using namespace std;
 
 int findPairs(vector<int>& nums, int k){
+	int pairs = 0, n = nums.size();
+	map<int,int> mp;
+	for(int &i : nums) mp[i] += 1;
+	for(auto i : mp){
+		int a = i.first;
+		int freq_a = i.second;
+		if(k>0 && mp[k+a] > 0) pairs++;
+		else if(k == 0 && mp[a] > 0) pairs++;
+	}
+	return pairs;
+}
+
+int main(){	
+	int n,k;
+	cin >> n;
+	vector<int> arr(n);
+	for(int i=0; i<n; i++) cin >> arr[i];
+	cin >> k;
+	
+	int no_of_pairs = findPairs(arr,k);
+	cout << no_of_pairs << "\n";
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+int findPairs(vector<int>& nums, int k){
 	unordered_map<int,int> mp;
 	set<pair<int,int>> pairs;
 	
@@ -27,16 +90,4 @@ int findPairs(vector<int>& nums, int k){
 	
 	return pairs.size();
 }
-
-int main(){	
-	int n,k;
-	cin >> n;
-	vector<int> arr(n);
-	for(int i=0; i<n; i++) cin >> arr[i];
-	cin >> k;
-	
-	int no_of_pairs = findPairs(arr,k);
-	cout << no_of_pairs << "\n";
-
-	return 0;
-}
+*/
