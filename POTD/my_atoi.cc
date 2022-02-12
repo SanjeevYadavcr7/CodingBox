@@ -30,8 +30,8 @@ int main(){
 	string str;
 	getline(cin,str);
 	
-	int num = myAtoi(str);
-	cout << num << "\n";
+	string new_str = str;
+	cout << new_str << "\n";
 	
 	return 0;
 }
