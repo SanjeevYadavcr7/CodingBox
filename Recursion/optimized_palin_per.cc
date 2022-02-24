@@ -53,7 +53,7 @@ vector<string> all_plaindromes(string str){
 	if(odds > 1) return ans;
 	
 	getPalinPermutations(1,len,mp,"",odd,ans);
-	sort(ans.begin(),ans.end());
+	//sort(ans.begin(),ans.end());
 	return ans;
 }
 
@@ -62,7 +62,7 @@ int main(){
 	cin >> str;
 	
 	vector<string> ans = all_plaindromes(str);
-	for(string str : ans) cout << str << " ";
+	for(string str : ans) cout << str << "\n";
 	cout << "\n";
 
 	return 0;
