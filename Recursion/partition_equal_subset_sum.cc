@@ -2,6 +2,25 @@
 using namespace std;
 void display(vector<vector<int>> ans);
 
+/*
+bool areEqualSumSubsets(int idx, int curr_sum, int total, vector<int>& nums){
+        if(curr_sum*2 == total) return true;
+        if(curr_sum > total/2 || idx >= nums.size()) return false;
+        
+	return areEqualSumSubsets(idx+1,curr_sum,total,nums) || areEqualSumSubsets(idx+1,curr_sum+nums[idx],total,nums);     
+}
+    
+    bool canPartition(vector<int>& nums){
+        int n = nums.size(), k = 2, total = 0;
+        vector<vector<int>> subsets(k);
+        
+        for(int& i : nums) total += i;
+        if(total&1) return false;
+            
+        return areEqualSumSubsets(0,0,total,nums);
+    }
+*/
+
 bool isEqualSumSubsets(vector<vector<int>>& subsets){	
 	int sum1 = 0, sum2 = 0;
 	for(int j=0; j<subsets[0].size(); j++) sum1 += subsets[0][j];
