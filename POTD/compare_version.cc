@@ -1,78 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int getNum(string num){
-	int ans=0, k=0, n=num.size();
-	for(int i=n-1; i>=0; i--){
-		ans += ((num[i]-'0')*pow(10,k));
-		k++;
-	}
-	return ans;
+vector<int> getNumArr(string str){
+	vector<int> arr;
+   	int num = 0;
+   	for(char ch : str){
+   		if(ch == '.'){
+   			arr.push_back(num);
+   			num = 0;
+   		}
+   		else num = num*10 + (ch-'0');
+   	}
+ 	
+ 	if(num || arr.empty()) arr.push_back(num);
+    return arr;
 }
 
-vector<int> getString(string str){
-	int n = str.size();
-    vector<int> ans;
-    string temp = "", num = "";
-    
-    int i = 0;
-    while(str[i] == '0') i++;
-    
-    for(;i<n;){
-     	char ch = str[i];
-        if(ch == '.'){
-        	num += temp;
-        	if(temp == "") ans.push_back(0);
-        	else{
-        		int x = getNum(temp);
-        		ans.push_back(x);
-        	}
-            temp = "";
-            i++;
-            while(str[i] == '0')i++;
-        }
-        else{
-        	temp += ch;
-            i++;
-        }    
-	}
-    if(temp.size() > 0){
-    	num += temp;
-    	int x = getNum(temp);
-    	ans.push_back(x);
-    }
-    if(temp == "") ans.push_back(0);
-    
-    //cout << num << " | ";
-     
-    return ans;
+void display(vector<int> arr){
+	for(int &i : arr) cout << i << " ";
+	cout << "\n";
 }
   
 int compareVersion(string version1, string version2) {
-	vector<int> num1 = getString(version1);
-    vector<int> num2 = getString(version2);
+	vector<int> arr1 = getNumArr(version1);
+    vector<int> arr2 = getNumArr(version2);
 	
-	/*	
-	cout<<"\n";
-	for(int i:num1) cout << i << " "; cout<<"\n";
-	for(int i:num2) cout << i << " "; cout<<"\n";
-	*/
+	display(arr1);
+	display(arr2);
 	
-	int i=0, j=0, n=num1.size(), m=num2.size();
-	while(i<n && j<m){
-		if(num1[i] == num2[j]) i++,j++;
-		else if(num1[i] > num2[j]) return 1;
-		else return -1;
-	}
+	int n = arr1.size(), m = arr2.size();
+	int max_len = max(n,m);
+	for(int i=0; i<max_len; i++){
+		int val1 = (i<n) ? arr1[i] : 0;
+		int val2 = (i<m) ? arr2[i] : 0;
 	
-	while(j<m){
-		if(num2[j] != 0) return -1;
-		j++;
-	}
-	
-	while(i<m){
-		if(num1[i] != 0) return 1;
-		i++;
+		if(val1 > val2) return 1;
+		if(val1 < val2) return -1;
 	}
 	
 	return 0;
