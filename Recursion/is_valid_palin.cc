@@ -20,7 +20,7 @@ void solve(string str, int rem, unordered_map<string,bool>& mp){
 	if(rem == 0){
 		if(!mp[str]){
 			mp[str] = true;
-			if(getMinCharsRemove(str) == 0) cout << str << "\n";
+			if(getMinCharsRemove(str) == 0)cout << str << "\n";
 		}
 		return;
 	}

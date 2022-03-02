@@ -1,54 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-/*
-int getMaxIndex(string num, unordered_map<int,bool>& mp){
-	int idx = -1, max_ch = 0;
-	for(int i=0; i<num.size(); i++){
-		if(mp[i] == true) continue;
-		int curr_ch = num[i] - '0';
-		if(curr_ch >= max_ch){
-			max_ch = curr_ch;
-			idx = i;
-		}
-	}
-	return idx;
-}
-
-string swap(int idx, int max_idx, string num){
-	string temp = num;
-	char ch = temp[idx];
-	temp[idx] = temp[max_idx];
-	temp[max_idx] = ch;
-	return temp;
-}
-
-int getMaxNum(int idx, string num, string& max_num, unordered_map<int,bool>& mp){
-	int k = 0;
-	for(int i=0; i<num.size(); i++){
-		if(mp[i]) continue;
-		int curr_ch = num[i] - '0';
-		string temp = swap(i,idx,num);
-		if(temp > max_num){
-			k = i;
-			max_num = temp;
-		} 
-	}
-	return k;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 string swap(int idx, int max_idx, string num){
 	string temp = num;
 	char ch = temp[idx];
