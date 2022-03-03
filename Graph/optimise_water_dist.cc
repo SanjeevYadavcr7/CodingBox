@@ -20,11 +20,6 @@ int getMinSupplyCost(vector<pair<int,int>> graph[], int n, int src, int cost){
 		vis[node] = true;
 		path += cost;
 		
-		/*
-		cout << "Node = " << node << " | ";
-		cout << "Cost = " << path << "\n";
-		*/
-		
 		for(auto it : graph[node]) Q.push({it.second,it.first});
 	}
 	return path;
