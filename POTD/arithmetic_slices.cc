@@ -6,6 +6,8 @@ void display(vector<int>& arr){
 	for(int& i : arr) cout << i << " ";
 }
 
+/* Recursive approach
+
 bool isValidSlice(vector<int>& arr){
 	int n = arr.size();
 	if(n < 3) return false;
@@ -53,6 +55,24 @@ int numberOfArithmeticSlices(vector<int>& nums){
 	solve(0,nums,ans,subarray);
 	return ans;
 }
+*/
+
+int numberOfArithmeticSlices(vector<int>& nums){
+	int n = nums.size();
+	if(n<3) return 0;
+	
+	int cnt = 0;
+	vector<int> slices(n);
+	slices[0] = slices[1] = 0;
+	for(int i=2; i<n; i++){
+		if(nums[i] - nums[i-1] == nums[i-1] - nums[i-2]){
+			slices[i] = (slices[i-1] + 1);
+			cnt += slices[i];	
+		}
+	}
+	return cnt;
+}
+
 
 int main(){	
 	int n;
@@ -65,3 +85,23 @@ int main(){
 	
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

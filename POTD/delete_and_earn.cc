@@ -2,6 +2,24 @@
 using namespace std;
 
 int deleteAndEarn(vector<int>& nums) {
+        int max_coin = *max_element(nums.begin(),nums.end());
+        vector<int> coin_freq(max_coin+1,0);
+        vector<int> earning(max_coin+1);
+        
+        for(int &i : nums) coin_freq[i] += 1;
+        earning[0] = 0;
+        earning[1] = coin_freq[1];
+        
+        
+        for(int coin = 2; coin <=max_coin; coin++){
+            int curr_coin_earning = coin * coin_freq[coin];
+            int max_earning = max(earning[coin-1], earning[coin-2]+curr_coin_earning);
+            earning[coin] = max_earning;
+        }
+        return earning[max_coin];
+    }
+
+int deleteAndEarn(vector<int>& nums) {
     int total = 0;
     map<int,int> mp;
         
