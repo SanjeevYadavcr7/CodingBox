@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef pair<int,pair<int,int>> pi;
+typedef pair<string,pair<int,int>> psi;
+
+bool isOutOfMaze(int row, int col,vector<vector<int>>& maze){
+	if(row < 0 || row == maze.size() || col < 0 || col == maze[0].size()) return true;
+	return false;
+}
 
 void printAllMinCostPaths(vector<vector<int>>& maze){
 	int n = maze.size(), m = maze[0].size();
@@ -13,7 +19,40 @@ void printAllMinCostPaths(vector<vector<int>>& maze){
 			maze[i][j] += min(maze[i-1][j], maze[i][j-1]);
 		}
 	}
-	cout << maze[n-1][m-1] << "\n";
+	int min_cost = maze[n-1][m-1];
+	cout << min_cost << "\n";
+	
+	queue<psi> Q;
+	Q.push({"",{n-1,m-1}});
+	
+	while(!Q.empty()){
+		int size = Q.size();
+		while(size--){
+			auto it = Q.front();
+			int x = it.second.first;
+			int y = it.second.second;
+			string path = it.first;
+			Q.pop();
+	
+			if(x == 0 && y == 0){
+				cout << path << "\n";
+				continue;
+			}
+				
+			int val1 = isOutOfMaze(x-1,y,maze) ? INT_MAX : maze[x-1][y];
+			int val2 = isOutOfMaze(x,y-1,maze) ? INT_MAX: maze[x][y-1];	
+			if(val1 > val2){
+				Q.push({"H"+path,{x,y-1}});
+			}
+			else if(val1 < val2){
+				Q.push({"V"+path,{x-1,y}});
+			}
+			else{
+				Q.push({"H"+path,{x,y-1}});
+				Q.push({"V"+path,{x-1,y}});
+			}
+		}	
+	}
 }
 
 /*
