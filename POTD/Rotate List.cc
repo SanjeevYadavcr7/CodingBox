@@ -11,6 +11,24 @@ struct ListNode {
 
 void display(ListNode* head);
 
+ListNode* rotateRight(ListNode* head, int k){
+	if(!head || !head->next || k == 0) return head;
+	
+	ListNode* curr = head;
+	int len = 0;
+	while(curr && ++curr) curr = curr->next;
+	
+	curr->next = head;
+	k %= n;
+	k = len-k;
+	while(k--) curr = curr->next;
+	head = curr->next;
+	curr->next = NULL;
+	
+	return head;
+}
+
+/*
 int getListLength(ListNode* head){
 	int cnt = 0;
 	while(head){
@@ -43,6 +61,7 @@ ListNode* rotateRight(ListNode* head, int k){
 	curr->next = right;	
 	return left;
 }
+*/
 
 int main(){
 	int k;
