@@ -15,6 +15,33 @@ class TreeNode{
 void display(TreeNode* root);
 TreeNode* createTree(vector<string>& arr, int& idx);
 
+
+bool isValidBST(TreeNode* root){
+        if(!root){
+            MinMaxPair mp = new MinMaxPair();
+            return mp;
+        }
+        
+        MinMaxPair lp = isValidBST(root->left);
+        MinMaxPair rp = isValidBST(root->right);
+        
+        MinMaxPair p = new MinMaxPair();
+        p.isBST = isValidBST(root->left) && isValidBST(root->right) && (root->val>lp.max_val && root->val<rp.min_val);
+        p.min_val = min(root->val,min(lp.min_val,rp.min_val));
+        p.max_val = max(root->val,max(lp.max_val,rp.max_val));
+        return p;
+}
+ 
+
+
+
+
+
+
+
+
+
+
 void getPreOrder(TreeNode* node, vector<int>& preOrder){
         if(!node) return;
         getPreOrder(node->left,preOrder);
