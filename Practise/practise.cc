@@ -1,41 +1,15 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
- 
-void solve(int n){
-    string str = to_string(n);
-    cout<<str.length();
-}
-
-struct node{
-    int data;
-    struct node *next;
-}
-
-void reverse(head){
-
-struct node *slow=head, *fast=head;
-while(slow && fast && fast->next){
-    slow = slow->next;
-    fast = fast->next->next;
-    if(slow == fast) return 1;
-}
-} 
 
 int main(){
-    
-    struct node* head = NULL;
-
-    int n,x;
-    cin>>n;
-    vector<int> arr;
-    map<int,int> mp;
-    for(int i=0;i<n;i++){
-        cin>>x;
-        mp.insert({i,x});
-    }
-
-    for(auto i: mp)cout<<i.second<<" ";
-    cout<<"\n";
-
-return 0;
+	int i=0,j=0,c=0;
+	char str[] = {"ZohoCorp Pvt Ltd Based on Chennai"};
+	while(str[i] != '\0'){
+		j = i;
+		while((str[j] != ' ') && (str[j] != '\0')) j++;
+		if(str[j] == ' ') c++;
+		i = j+1;
+	}
+	printf("%d\n",c);
+	return 0;
 }

@@ -13,6 +13,8 @@ void display(ListNode* node);
 /*
 
 // Naive approach - Time: O(N) | Space: O(N)
+
+
 ListNode* deleteDuplicates(ListNode* head) {
 	 map<int,int> mp;
      ListNode* curr = head;
@@ -34,6 +36,27 @@ ListNode* deleteDuplicates(ListNode* head) {
 
 */
 
+ListNode* deleteDuplicates(ListNode* head){
+	if(!head || !head->next) return head;
+	
+	ListNode* psuedoHead = new ListNode(-1,head);
+	ListNode* unique = psuedoHead;
+	ListNode* curr = head->next;
+	
+	while(curr){
+		bool rep = false;
+		while(curr && unique->next->val == curr->val){
+			rep = true;
+			curr = curr->next;
+		}
+		
+		if(rep) unique->next = curr;
+		else unique = unique->next;
+		
+		if(curr) curr = curr->next; 
+	}
+	return psuedoHead->next;
+}
 
 
 int main(){

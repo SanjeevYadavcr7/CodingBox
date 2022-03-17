@@ -1,11 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string minRemoveToMakeValid(string s){
-	
-}
-
-/*
 string minRemoveToMakeValid(string s) {
         int n = s.size();
         stack<pair<char,int>> stk;
@@ -14,7 +9,7 @@ string minRemoveToMakeValid(string s) {
         for(int i=0; i<n; i++){
             char ch = s[i];
             if(ch == '(' || ch == ')'){
-                if(!stk.empty() && stk.top().first == '(' && ch == ')') stk.pop();
+                if(stk.top().first == '(' && ch == ')') stk.pop();
                 else stk.push({ch,i});
             }
         }
@@ -30,7 +25,6 @@ string minRemoveToMakeValid(string s) {
         }
         return ans;
 }
-*/
 
 int main(){
 	string str;

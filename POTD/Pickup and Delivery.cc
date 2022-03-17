@@ -13,6 +13,18 @@ int countOrders(int n){
     return res;
 }
 
+int countOrders(int n){
+    long pick_up = 1, delivery = 1;
+    for(int i=1; i<=n ;i++){
+        pick_up = (pick_up%M)*i;
+    }
+    for(int i=1; i<=n ;i++){
+        delivery = (delivery%M)*i;
+    }
+    long ans = ( pick_up % M * delivery % M ) % M;
+    return ans;
+}
+
 //  int ans = 0;
     
 //     void solve(string str, unordered_map<char,bool>& isPresent, string psf){
