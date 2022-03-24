@@ -11,17 +11,13 @@ int numRescueBoats(vector<int>& people, int limit){
 		// getting total weight in curr boat
 		weight = people[i] + people[j];
 		
-		if(weight <= limit){
-			// if both selected persons can sit in curr boat
-			i++,j--;
-		}
-		else{
-			// if both selected persons can't sit => motallu ko doosri boat mein baghao
-			j--;
-		}
+		if(weight <= limit) i++;
+		j--;
+		// case 1: if both selected persons can sit in curr boat
+		// case 2: if both selected persons can't sit => motallu ko doosri boat mein baghao
 		
-		// boat used
 		boats++;
+		// boat used
 	}	
 	return boats;
 }
