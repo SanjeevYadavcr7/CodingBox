@@ -3,6 +3,26 @@ using namespace std;
 
 vector<int> partitionLabels(string s){
 	int n = s.size();
+	vector<int> res;
+	unordered_map<char,int> last_occ;
+	
+	for(int i=0; i<n; i++) last_occ[s[i]] = i;
+	
+	int prev = -1, reach = -1;
+	for(int i=0; i<n; i++){
+		reach = max(reach,last_occ[s[i]]);
+		if(reach == i){
+			int range = i - prev;
+			res.push_back(range);
+			prev = reach;
+		}
+	}
+	return res;
+}
+
+/*
+vector<int> partitionLabels(string s){
+	int n = s.size();
 	vector<int> ans;
 	unordered_map<char,int> mp;
 	for(char ch : s) mp[ch] += 1;
@@ -39,6 +59,7 @@ vector<int> partitionLabels(string s){
 	}
 	return ans;
 }
+*/
 
 int main(){
 	string str;
