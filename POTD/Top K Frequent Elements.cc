@@ -1,46 +1,42 @@
 #include<bits/stdc++.h>
 using namespace std;
-//typedef pair<int,int> customPair;
 
-// Using QuickSelect
 
-int partition(int l, int r, vector<int>& nums, unordered_map<int,int>& freq){
-	int pivot_freq = freq[nums[r]];
+// Using QuickSelect | Acerage Case: TC: O(N)
+
+int getPivotIndex(int l, int r, vector<int>& unique, unordered_map<int,int>& freq){
 	int i = l-1;
-	
+	int pivot_freq = freq[unique[r]];
 	for(int j=l; j<r; j++){
-		if(freq[nums[j]] < pivot_freq){
+		if(freq[j] < pivot_freq){
 			i++;
-			swap(nums[i],nums[j]);
+			swap(unique[i],unique[j]);
 		}
 	}
-	swap(nums[i+1],nums[r]);
+	swap(unique[i+1],unique[r]);
 	return i+1;
 }
-	
 
-void quickSelect(int left, int right, int k, vector<int>& nums, unordered_map<int,int>& freq){
-	if(left == right) return;
+void getKthFrequentIdx(int l, int r, int k, vector<int>& unique, unordered_map<int,int>& freq){
+	if(l == r) return;
 	
-	int pivot_idx = partition(left,right,nums,freq);
-	
-	if(k == pivot_idx) return;
-	else if(k < pivot_idx) quickSelect(left,pivot_idx-1,k,nums,freq);
-	else quickSelect(pivot_idx+1,right,k,nums,freq);
+	int pivot = getPivotIndex(l,r,unique,freq);
+	if(pivot == k) return;
+	else if(k < pivot) getKthFrequentIdx(l,pivot-1,k,unique,freq);
+	else getKthFrequentIdx(pivot+1,r,k,unique,freq);
 }
 
-
 vector<int> topKFrequent(vector<int>& nums, int k){
+	int n = nums.size();
+	unordered_map<int,int> freq;
 	vector<int> k_freq_nums(k);
 	vector<int> unique;
-	unordered_map<int,int> freq;
 	
 	for(int& i : nums) freq[i]++;
-	int n = freq.size();
-	for(auto i : freq) unique.push_back(i.first);
+	for(auto& i : freq) unique.push_back(i.first);
 	
-	quickSelect(0,n-1,n-k,unique,freq);
-	
+	n = freq.size();
+	getKthFrequentIdx(0,n-1,n-k,unique,freq);
 	copy(unique.begin() + n - k, unique.end(), k_freq_nums.begin());
 	return k_freq_nums;
 }
@@ -49,6 +45,7 @@ vector<int> topKFrequent(vector<int>& nums, int k){
 
 /*  Using HashMap + Heap | TC: O(NLogN) | SC: O(N)
 
+typedef pair<int,int> customPair;
 vector<int> topKFrequent(vector<int>& nums, int k){
 	priority_queue<customPair> Q;
 	unordered_map<int,int> freq;
