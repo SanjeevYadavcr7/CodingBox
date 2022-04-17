@@ -29,7 +29,7 @@ class KthLargest {
 int main(){
 	// Custom Data Structure
 	// Initialization => O(NLogN)
-	// Lookup => O(1)
+	// Lookup => O(1)	
 
 	return 0;
 }
