@@ -1,6 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Idea is same as below appraoch but uses a single loop (*Leetcode discuss solution)
+
+namespace x {
+	int max = INT_MIN, min = INT_MAX;
+}
+
+int findUnsortedSubarray(vector<int>& nums) {
+	int n = nums.size();
+	int beg = -1, end = -1;
+	int left = 0, right = n-1;
+	
+	while(right >= 0) {
+		if(nums[left] < x::max) end = left;
+		else x::max = nums[left];
+		
+		if(nums[right] > x::min) beg = right;
+		else x::min = nums[right];
+		
+		left++;
+		right--; 
+	}
+	return beg != -1 ? end-beg+1 : 0;
+}
+
+
+/*---------------------------------------------------------------*/
+
 class Solution {
 public:
     int placeMinNum(vector<int>& nums, int min_num) {
@@ -56,7 +83,7 @@ int main() {
 	for(int i=0; i<n; i++) std::cin >> nums[i];
 	
 	Solution obj;
-	std::cout << obj.findUnsortedSubarray(nums) << std::endl;
+	std::cout << findUnsortedSubarray(nums) << std::endl;
 	
 	return 0;	
 }
